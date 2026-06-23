@@ -1,0 +1,67 @@
+.stepper {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin: var(--space-5) 0;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  gap: var(--space-2);
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+}
+
+.icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.connector {
+  flex: none;
+  align-self: flex-start;
+  margin-top: 20px;
+  width: var(--space-5);
+  height: 1px;
+  background: var(--color-border);
+}
+
+@media (max-width: 640px) {
+  .stepper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .stage {
+    flex-direction: row;
+    flex: none;
+    gap: var(--space-3);
+    text-align: left;
+  }
+
+  .connector {
+    align-self: flex-start;
+    margin: 0 0 0 20px;
+    width: 1px;
+    height: var(--space-3);
+  }
+}

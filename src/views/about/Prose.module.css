@@ -1,0 +1,67 @@
+.paragraph {
+  margin-bottom: var(--space-4);
+  color: var(--color-text);
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.link {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.link:hover {
+  color: var(--color-accent-strong);
+}
+
+.linkArrow {
+  display: inline-block;
+  margin-left: 1px;
+  font-size: 0.85em;
+  text-decoration: none;
+}
+
+.bulletList {
+  margin: 0 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bulletItem {
+  position: relative;
+  padding-left: var(--space-5);
+  color: var(--color-text);
+}
+
+.bulletItem::before {
+  content: "";
+  position: absolute;
+  left: var(--space-2);
+  top: 0.7em;
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-subtle);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}

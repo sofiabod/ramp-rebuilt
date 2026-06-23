@@ -1,0 +1,68 @@
+:root {
+  --font-body: "Lausanne";
+  --font-stack-body: var(--font-body), Lausanne, system-ui, sans-serif;
+  --font-stack-display: "Burgess", "Times New Roman", Times, serif;
+  --font-stack-mono: "Berkeley Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f7f7f5;
+  --color-bg-raised: #fbfbfa;
+  --color-border: #e6e6e1;
+  --color-border-strong: #d6d6d0;
+
+  --color-text: #16160f;
+  --color-text-muted: #6c6c63;
+  --color-text-faint: #9a9a90;
+
+  --color-accent: #16160f;
+  --color-accent-strong: #16160f;
+  --color-accent-soft: #f0efe9;
+
+  --color-pos: #1c7a4d;
+  --color-neg: #b4453a;
+
+  --series-a: #5b7fc4;
+  --series-b: #c4655b;
+  --series-a-soft: #c3d0ee;
+  --series-b-soft: #eecdd0;
+
+  --plot-explore: #9d7c9e;
+  --plot-read: #6f9b86;
+  --plot-write: #d6c25c;
+  --plot-test: #afcbb1;
+  --plot-marker: #e08a6e;
+  --plot-grid: #ededea;
+
+  --hist-a: #8b9cd8;
+  --hist-a-line: #6b86d6;
+  --hist-b: #d6aebb;
+  --hist-b-line: #a85a6a;
+
+  --spark-lime: #bcd04a;
+  --spark-blue: #5b7fc4;
+  --spark-brown: #a8814e;
+  --spark-orange: #e0673a;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(20, 20, 15, 0.06);
+  --shadow-md: 0 2px 8px rgba(20, 20, 15, 0.08);
+  --shadow-pill: 0 1px 3px rgba(20, 20, 15, 0.12);
+
+  --maxw-prose: 720px;
+  --maxw-page: 1180px;
+  --nav-height: 64px;
+}

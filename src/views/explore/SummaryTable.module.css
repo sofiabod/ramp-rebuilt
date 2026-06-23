@@ -1,0 +1,124 @@
+.scroller {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.thText,
+.thNum {
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.thText {
+  text-align: left;
+}
+
+.thNum {
+  text-align: right;
+}
+
+.sortBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: transparent;
+  border: none;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.thNum .sortBtn {
+  justify-content: flex-end;
+}
+
+.sortBtn:hover {
+  color: var(--color-text);
+}
+
+.arrow {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--color-bg-subtle);
+}
+
+.modelCell {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  white-space: nowrap;
+}
+
+.modelName {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.tag {
+  padding: 1px var(--space-2);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-pill);
+  font-size: 0.625rem;
+  font-weight: 500;
+  color: var(--color-accent-strong);
+}
+
+.num {
+  padding: var(--space-3) var(--space-4);
+  text-align: right;
+}
+
+.cellInner {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.value {
+  color: var(--color-text);
+  text-align: left;
+}
+
+.barTrack {
+  width: 48px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  flex: none;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+}

@@ -1,0 +1,23 @@
+.layout {
+  max-width: var(--maxw-page);
+  margin: 0 auto;
+  padding: var(--space-7) var(--space-5) var(--space-9);
+  display: grid;
+  grid-template-columns: 200px minmax(0, var(--maxw-prose));
+  gap: var(--space-6);
+  justify-content: start;
+}
+
+.content {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-top: var(--space-5);
+    justify-content: stretch;
+    max-width: var(--maxw-prose);
+  }
+}

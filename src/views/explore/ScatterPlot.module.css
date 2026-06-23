@@ -1,0 +1,58 @@
+.wrap {
+  width: 100%;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.grid {
+  stroke: var(--plot-grid);
+  stroke-width: 1;
+}
+
+.axis {
+  stroke: var(--color-border-strong);
+  stroke-width: 1;
+}
+
+.tick {
+  fill: var(--color-text-faint);
+  font-size: 11px;
+}
+
+.axisTitle {
+  fill: var(--color-text-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.errorBar {
+  stroke: var(--color-border-strong);
+  stroke-width: 1.5;
+}
+
+.errorCap {
+  stroke: var(--color-border-strong);
+  stroke-width: 1.5;
+}
+
+.marker {
+  fill: var(--plot-marker);
+  stroke: var(--color-bg);
+  stroke-width: 1.5;
+}
+
+.frontier {
+  stroke: var(--color-border-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+}
+
+.label {
+  fill: var(--color-text);
+  font-size: 12px;
+  font-weight: 400;
+}

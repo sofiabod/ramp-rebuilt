@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gardener phase-2 burn</title>
+<style>
+  @font-face{font-family:"Lausanne";font-weight:300;font-display:swap;src:url("/fonts/TWKLausanne-300.woff2") format("woff2")}
+  @font-face{font-family:"Lausanne";font-weight:400;font-display:swap;src:url("/fonts/TWKLausanne-400.woff2") format("woff2")}
+  @font-face{font-family:"Lausanne";font-weight:700;font-display:swap;src:url("/fonts/TWKLausanne-700.woff2") format("woff2")}
+  @font-face{font-family:"Burgess";font-weight:400;font-display:swap;src:url("/fonts/Burgess-400.woff2") format("woff2")}
+  :root{
+    --body:"Lausanne",system-ui,sans-serif; --display:"Burgess","Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;
+    --bg:#fff; --subtle:#f7f7f5; --raised:#fbfbfa; --border:#e6e6e1; --border-strong:#d6d6d0;
+    --text:#16160f; --muted:#6c6c63; --faint:#9a9a90; --soft:#f0efe9;
+    --pos:#1c7a4d; --neg:#b4453a;
+    --hist-a:#8b9cd8; --hist-a-line:#6b86d6; --hist-b:#d6aebb; --hist-b-line:#a85a6a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:840px;margin:0 auto;padding:64px 28px 96px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  h1{font-family:var(--display);font-weight:400;letter-spacing:-.01em;font-size:46px;line-height:1.05;margin:14px 0 16px}
+  .lede{font-size:19px;color:var(--text);max-width:640px}
+  .lede b{font-weight:700}
+  h2{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+     margin:56px 0 18px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);
+    border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:34px}
+  .stat{background:var(--raised);padding:20px 18px}
+  .stat .n{font-family:var(--display);font-size:34px;line-height:1}
+  .stat .l{font-size:13px;color:var(--muted);margin-top:8px}
+  .pos{color:var(--pos)} .neg{color:var(--neg)}
+  /* chart */
+  .chart{border:1px solid var(--border);border-radius:8px;background:var(--raised);padding:24px 24px 18px}
+  .legend{display:flex;gap:24px;font-size:13px;color:var(--muted);margin-bottom:6px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:22px;height:3px;border-radius:2px;margin-right:8px;vertical-align:4px}
+  .axis{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--faint);margin-top:6px}
+  .cap{font-size:13px;color:var(--muted);margin-top:14px;max-width:640px}
+  .prose{max-width:660px}
+  .prose p{margin:0 0 14px} .prose p:last-child{margin-bottom:0}
+  .term{font-weight:700} .term-b{font-weight:700;color:var(--hist-b-line)} .term-a{font-weight:700;color:var(--hist-a-line)}
+  ol.rec{max-width:660px;margin:0;padding-left:22px} ol.rec li{margin:9px 0}
+  ul.files{max-width:660px;margin:0} ul.files li{margin:7px 0;font-size:14px;color:var(--muted)}
+  ul.files code{font-family:var(--mono);font-size:12.5px;color:var(--text);background:var(--soft);padding:1px 6px;border-radius:4px}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--border)}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:400}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  tr.hl td{background:var(--soft)}
+  .barcell{position:relative}
+  .barcell .bar{position:absolute;left:8px;top:50%;transform:translateY(-50%);height:9px;border-radius:3px;opacity:.5}
+  .barcell span{position:relative}
+  .foot{font-size:12px;color:var(--faint);margin-top:48px;border-top:1px solid var(--border);padding-top:16px}
+  @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}h1{font-size:36px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="kicker">Sentra &middot; entity gardener &middot; phase-2 analysis</div>
+  <h1>The dedup burn is two problems, not one</h1>
+  <p class="lede">90,405 prod "different" verdicts, taken apart. The cost is not a threshold you can tune. It is <b>two separate noise sources at opposite ends of cosine</b>, which is exactly why raising the 0.88 cutoff went nowhere.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">90,405</div><div class="l">"different" verdicts judged</div></div>
+    <div class="stat"><div class="n neg">49.7%</div><div class="l">are topics or decisions alone</div></div>
+    <div class="stat"><div class="n pos">68%</div><div class="l">removable with no LLM call (measured)</div></div>
+    <div class="stat"><div class="n">0.99</div><div class="l">median judge confidence on the noise</div></div>
+  </div>
+
+  <h2>Two noise sources at opposite ends of cosine</h2>
+  <div class="chart">
+    <div class="legend">
+      <span><i style="background:var(--hist-a-line)"></i>alias_only (28,748) &middot; person/org sharing a generic alias</span>
+      <span><i style="background:var(--hist-b-line)"></i>cosine_only (61,626) &middot; PO/ticket/SKU string templates</span>
+    </div>
+    <svg id="curve" viewBox="0 0 760 230" width="100%" preserveAspectRatio="xMidYMid meet"></svg>
+    <div class="axis" id="axis"></div>
+  </div>
+  <div class="prose" style="margin-top:20px">
+    <p><span class="term-b">Look-alike records (~68%, right hump).</span> POs, tickets, SKUs. Their names look nearly identical (PO-...318 vs PO-...227), so the embedding flags them as similar, but they are obviously different records. The judge is 99% sure they differ, so we are paying it to state the obvious.</p>
+    <p><span class="term-a">Same-name people and orgs (~32%, left hump).</span> Two different people (or orgs) that just share a common name or alias, so they get compared even though the names are not actually similar.</p>
+    <p>One pile sits at high similarity, the other at low, with a gap between. So there is no single similarity cutoff that catches both. Each needs its own fix.</p>
+  </div>
+
+  <h2>Topics and decisions specifically</h2>
+  <div class="prose">
+    <p>Topics are <span class="term">43.0%</span> of the "different" verdicts and decisions are <span class="term">6.7%</span>, so topic or decision alone is <span class="term">49.7%</span>, about half the burn. Adding projects and products (the same kind of record noise) brings it to <span class="term">66.4%</span>. Gardener only pairs entities of the same type, so these are pure record noise, not real entities.</p>
+  </div>
+  <table id="types" style="margin-top:20px"></table>
+
+  <h2>What is removable</h2>
+  <div class="prose">
+    <p>A deterministic "same shape, different number" rule removes <span class="term pos" style="color:var(--pos)">56.8%</span> with no LLM call. Scoping dedup away from record-style types removes <span class="term" style="color:var(--pos)">66.4%</span>. Together (exact union, fully safe) they remove <span class="term" style="color:var(--pos)">68.0%</span>. The orthogonal remainder is an alias document-frequency filter on the alias path, which pushes the ceiling toward 99%.</p>
+  </div>
+  <table id="levers" style="margin-top:20px"></table>
+
+  <h2>A quality finding, not only cost</h2>
+  <div class="prose">
+    <p>Of the org pairs marked "different," <span class="term">408 (11.2%)</span> are near-identical and <span class="term">136</span> are near-duplicates by name similarity. So gardener may be <span class="term">under-merging organizations</span> even while over-spending on the record noise. Person dedup, by contrast, is clean (0.8% near-identical); it is just over-invoked.</p>
+  </div>
+
+  <h2>Recommendation</h2>
+  <ol class="rec">
+    <li>Stand up a dashboard (type x admission path x cosine) and a small labeled gold set so every filter is falsifiable.</li>
+    <li>Ship the deterministic ID rule plus entity-type scoping behind a flag (~68%, no LLM, near-zero false-positive risk). Validate on the gold set first.</li>
+    <li>Add the alias document-frequency filter for the person/org remainder.</li>
+    <li>Route the near-identical org pairs to review to recover the missed merges.</li>
+  </ol>
+
+  <h2>Data files</h2>
+  <ul class="files">
+    <li><code>cosine_curves.csv</code> the two distribution curves (alias_only vs cosine_only) by 0.05 cosine bin.</li>
+    <li><code>burn_by_type.csv</code> rows and share by entity type.</li>
+    <li><code>topic_decision_breakdown.csv</code> the topic / decision contribution.</li>
+    <li><code>levers.csv</code> rows removed and share for each lever.</li>
+  </ul>
+
+  <div class="foot">org 389 &middot; aggregates only, no PII &middot; numbers measured on the 90,405-row export via phase2_id_filter.py</div>
+</div>
+
+<script>
+const fmt=n=>n.toLocaleString();
+// ---- the two curves ----
+const lo=[0.15,0.20,0.25,0.30,0.35,0.40,0.45,0.50,0.55,0.60,0.65,0.70,0.75,0.80,0.85,0.90,0.95];
+const alias=[9,75,409,1180,2930,4400,4607,4330,4020,3127,1845,982,578,204,52,0,0];
+const cos  =[0,0,0,0,0,0,0,0,0,0,0,0,0,0,21541,33988,6097];
+const W=760,H=230,PB=18,PT=10,PL=4,PR=4;
+const xmin=0.15,xmax=1.00;
+const X=v=>PL+(v-xmin)/(xmax-xmin)*(W-PL-PR);
+const Y=t=>PT+(1-t)*(H-PT-PB);            // t in [0,1]
+function smooth(pts){                      // catmull-rom -> bezier
+  let d=`M ${pts[0][0]} ${pts[0][1]}`;
+  for(let i=0;i<pts.length-1;i++){
+    const p0=pts[i-1]||pts[i],p1=pts[i],p2=pts[i+1],p3=pts[i+2]||p2;
+    const c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+    const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C ${c1x} ${c1y} ${c2x} ${c2y} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+function series(vals,fill,line){
+  const mx=Math.max(...vals);
+  const mids=lo.map(l=>l+0.025);
+  const pts=mids.map((m,i)=>[X(m),Y(vals[i]/mx)]);
+  const area=smooth(pts)+` L ${pts[pts.length-1][0]} ${Y(0)} L ${pts[0][0]} ${Y(0)} Z`;
+  return `<path d="${area}" fill="${fill}" opacity="0.35"/><path d="${smooth(pts)}" fill="none" stroke="${line}" stroke-width="2.5"/>`;
+}
+document.getElementById("curve").innerHTML=
+  `<line x1="${PL}" y1="${Y(0)}" x2="${W-PR}" y2="${Y(0)}" stroke="var(--border-strong)" stroke-width="1"/>`+
+  series(alias,"var(--hist-a)","var(--hist-a-line)")+
+  series(cos,"var(--hist-b)","var(--hist-b-line)");
+document.getElementById("axis").innerHTML=[0.2,0.4,0.6,0.8,1.0].map(v=>`<span>${v.toFixed(1)}</span>`).join("");
+
+// ---- tables ----
+const T=90405;
+function table(el,rows,cols,barcol){
+  const mx=Math.max(...rows.map(r=>r.v));
+  el.innerHTML=`<tr>${cols.map(c=>`<th class="${c.num?'num':''}">${c.h}</th>`).join("")}</tr>`+
+    rows.map(r=>`<tr class="${r.hl?'hl':''}">
+      <td class="barcell"><span>${r.k}</span><span class="bar" style="width:${r.v/mx*60}%;background:${r.c||barcol}"></span></td>
+      <td class="num">${fmt(r.v)}</td><td class="num">${(r.v/T*100).toFixed(1)}%</td></tr>`).join("");
+}
+table(document.getElementById("types"),[
+  {k:"topic",v:38884,c:"var(--hist-b-line)"},
+  {k:"person",v:24799,c:"var(--hist-a-line)"},
+  {k:"project",v:11068,c:"var(--hist-b-line)"},
+  {k:"decision",v:6014,c:"var(--hist-b-line)"},
+  {k:"product",v:4099,c:"var(--hist-b-line)"},
+  {k:"organization",v:3634,c:"var(--hist-a-line)"},
+  {k:"client + other",v:1907,c:"var(--faint)"},
+],[{h:"entity type"},{h:"rows",num:1},{h:"share",num:1}]);
+
+table(document.getElementById("levers"),[
+  {k:"Deterministic ID rule (no LLM)",v:51351,c:"var(--pos)"},
+  {k:"Entity-type scoping",v:60065,c:"var(--pos)"},
+  {k:"Both (exact union, safe)",v:61447,c:"var(--pos)",hl:1},
+  {k:"+ alias-path filter (ceiling)",v:89397,c:"var(--hist-a-line)"},
+],[{h:"lever"},{h:"removed",num:1},{h:"of burn",num:1}]);
+</script>
+</body>
+</html>

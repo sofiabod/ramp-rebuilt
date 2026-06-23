@@ -1,0 +1,66 @@
+.bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+  pointer-events: none;
+}
+
+.pill {
+  pointer-events: auto;
+  display: inline-flex;
+  gap: var(--space-1);
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-md);
+}
+
+.tab,
+.active {
+  padding: 6px var(--space-4);
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  transition: color 0.15s ease;
+}
+
+.tab {
+  color: var(--color-text-muted);
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tab:focus,
+.active:focus,
+.tab:focus-visible,
+.active:focus-visible {
+  outline: none;
+}
+
+.active {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+@media (max-width: 420px) {
+  .bar {
+    padding-left: var(--space-3);
+    padding-right: var(--space-3);
+  }
+
+  .pill {
+    max-width: 100%;
+  }
+
+  .tab,
+  .active {
+    padding: 6px var(--space-3);
+    font-size: 0.82rem;
+  }
+}

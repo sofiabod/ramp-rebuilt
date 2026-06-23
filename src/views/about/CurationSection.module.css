@@ -1,0 +1,168 @@
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin: var(--space-5) 0;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.step:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 32px;
+  bottom: calc(-1 * var(--space-5) - 4px);
+  width: 1px;
+  background: var(--color-border);
+}
+
+.stepIcon {
+  position: relative;
+  z-index: 1;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+}
+
+.stepIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.stepBody {
+  padding-top: 4px;
+}
+
+.stepTitle {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.stepDesc {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  margin-top: 2px;
+}
+
+.matrix {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: var(--space-3);
+  margin: var(--space-5) 0;
+  margin-left: calc(-1 * var(--space-3));
+}
+
+.matrix th,
+.matrix td {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.colHead {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  padding-bottom: 0;
+}
+
+.corner {
+  width: 80px;
+}
+
+.rowHead {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  width: 80px;
+  white-space: nowrap;
+}
+
+.matrix td:not(.corner) {
+  vertical-align: top;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+}
+
+.cellAxis {
+  display: none;
+}
+
+.cellCode {
+  display: block;
+  font-family: var(--font-stack-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+
+.cellDesc {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 560px) {
+  .matrix {
+    font-size: 0.8rem;
+  }
+
+  .corner,
+  .rowHead {
+    width: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .matrix,
+  .matrix thead,
+  .matrix tbody,
+  .matrix tr,
+  .matrix th,
+  .matrix td {
+    display: block;
+    width: auto;
+  }
+
+  .matrix {
+    border-spacing: 0;
+    margin-left: 0;
+  }
+
+  .matrix thead {
+    display: none;
+  }
+
+  .matrix tr {
+    margin-bottom: 0;
+  }
+
+  .rowHead {
+    display: none;
+  }
+
+  .matrix td:not(.corner) {
+    margin-bottom: var(--space-3);
+  }
+
+  .cellAxis {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--color-text-faint);
+    margin-bottom: var(--space-1);
+  }
+}

@@ -1,0 +1,42 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  counter-reset: reference;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+}
+
+.item::before {
+  counter-increment: reference;
+  content: counter(reference) ".";
+  color: var(--color-text-faint);
+  font-family: var(--font-stack-mono);
+  font-size: 0.85rem;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.title a {
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.citation {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
